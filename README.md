@@ -14,21 +14,59 @@
 
 ### 기본 설정
 
-시험성적 DB구조
+DB 구조(SQLite)
 
-| 이름    | 타입   |
-| ------- | ------ |
-| name    | String |
-| subject | String |
-| score   | Int    |
+| 컬럼명 | 타입   | 설명|비고|
+| ------- | ------ |------| ------- |
+|_id|INTEGER|PRIMARY KEY|AUTOINCREMENT NOT NULL|
+|name|TEXT|이름||
+|subject|TEXT|과목||
+|score|INTEGER|성적||
+
+
+
 
 
 
 ### 순서
 
 1. 화면설정
-2. 클래스 설정
-3. 
+2. SQLiteOpenHelper 클래스 만들기
+
+
+
+2. SQLiteOpenHelper 
+```java
+public class MyDBHelper extends SQLiteOpenHelper {
+
+    public MyDBHelper(Context context) {
+        super(context, "subjectDB", null, 1);
+    }
+
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE subjectDB ( "
+                                + "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                                + "name TEXT, "
+                                + "subject TEXT, "
+                                + "score INTEGER"
+                        + ");"
+                    );
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS subjectDB");
+        onCreate(db);
+
+    }
+}
+
+```
+
+
 
 ## Result
 
